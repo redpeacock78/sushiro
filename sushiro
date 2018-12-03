@@ -14,6 +14,7 @@
 #  -p
 #  -k
 #  -a
+#  -f
 #Returns:
 #  None
 ######################################
@@ -21,7 +22,7 @@
 
 ###USAGE###
 [[ "${1}" = "-h" ]] && \
-  printf "sushiro version 0.0.1\n\nUSAGE: sushiro [OPTIONS] [ANYTHING]\nOptions:\n -l NUMBER\n    Randomly display the number of specified menus\n -p MENU_NAME\n    Display price of menu corresponding to name\n -k MENU_NAME\n    Display the calorie of the name corresponding menu\n -a\n    Display names of all menus\n -f\n    Fetch menus from www.akindo-sushiro.co.jp\n" && \
+  printf "sushiro version 0.0.2\n\nUSAGE: sushiro [OPTIONS] [ANYTHING]\nOptions:\n -l NUMBER\n    Randomly display the number of specified menus\n -p MENU_NAME\n    Display price of menu corresponding to name\n -k MENU_NAME\n    Display the calorie of the name corresponding menu\n -a\n    Display names of all menus\n -f\n    Fetch menus from www.akindo-sushiro.co.jp\n" && \
 exit 0
 
 
