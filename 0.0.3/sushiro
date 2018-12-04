@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+#
+# sushiro 0.0.3
+# (C) 2018 redpeacock78
+# GPLv3 is applied to this script
+
+######################################
+#Randomly display the menu of Sushiro.
+#Grobals:
+#  LINES
+#Arguments:
+#  -h
+#  -l
+#  -p
+#  -k
+#  -a
+#  -f
+#Returns:
+#  None
+######################################
+
+
+###USAGE###
+[[ "${1}" = "-h" ]] && \
+	printf "sushiro version 0.0.3\n\nUSAGE: sushiro [OPTIONS] [ANYTHING]\nOptions:\n -l NUMBER\n    Randomly display the number of specified menus\n    (By default it display one item)\n -p MENU_NAME\n    Display price of menu corresponding to name\n -k MENU_NAME\n    Display the calorie of the name corresponding menu\n -a\n    Display names of all menus\n -f\n    Fetch menus from www.akindo-sushiro.co.jp\n" && \
+exit 0
+
+
+###DEFAULT_PARAMETER###
+LINES=1
+
+###FETCH###
+CACHE="/usr/local/share/sushiro_cache"
+
+[[ "${1}" = "-f" ]] && \
+  curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "$CACHE" &&\
+exit 0
+
+###TEXT###
+[[ ! -f "$CACHE" ]] && \
+  curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "$CACHE"
+
+while [[ "${#}" -gt 0 ]]; do
+  ##RONDOM_MENUS##
+  if  [[ "${1}" = "-l" ]]; then
+    shift && \
+    lines="$(tr -dc '0-9' <<< $1)"
+    if [[ "${lines}" -eq 0 ]]; then
+      lines="${LINES}"
+    fi
+    cat $CACHE \
+      | grep -e '="ttl"' -e price \
+      | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
+      | tr '\n' ' ' \
+      | sed 's/税　/税 /g;s/ /,/g' \
+      | awk '{gsub(/kcal,/,"kcal\n");print}' \
+      | sort \
+      | uniq \
+      | sed 's/,倍/倍/' \
+      | awk -F ',' '{print $1}' \
+      | sort -R \
+      | grep "\S" \
+      | shuf -n "${lines}" && \
+      exit 0
+  ##MENUS_PRICES##
+  elif [[ "${1}" = "-p" ]]; then
+    shift && \
+    PRICES="$1"
+    shift
+    cat $CACHE \
+      | grep -e '="ttl"' -e price \
+      | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
+      | tr '\n' ' ' \
+      | sed 's/税　/税 /g;s/ /,/g' \
+      | awk '{gsub(/kcal,/,"kcal\n");print}' \
+      | sort \
+      | uniq \
+      | sed 's/,倍/倍/' \
+      | grep "${PRICES}" \
+      | awk -F ',' '{print $1,$2}' \
+      | sed 's/倍とろ//' \
+      | grep "\S"
+  ##MENUS_CALORIES##
+  elif [[ "${1}" = "-k" ]]; then
+    shift && \
+    CALORIES="$1"
+    shift
+    cat $CACHE \
+      | grep -e '="ttl"' -e price \
+      | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
+      | tr '\n' ' ' \
+      | sed 's/税　/税 /g;s/ /,/g' \
+      | awk '{gsub(/kcal,/,"kcal\n");print}' \
+      | sort \
+      | uniq \
+      | sed 's/,倍/倍/' \
+      | grep "${CALORIES}" \
+      | awk -F ',' '{print $1,$3}' \
+      | sed 's/ 100円+税//' \
+      | grep "\S"
+  ##SHOW_ALL_MENUS##
+  elif [[ "${1}" = "-a" ]]; then
+    cat $CACHE \
+      | grep -e '="ttl"' -e price \
+      | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
+      | tr '\n' ' ' \
+      | sed 's/税　/税 /g;s/ /,/g' \
+      | awk '{gsub(/kcal,/,"kcal\n");print}' \
+      | sort \
+      | uniq \
+      | sed 's/,倍/倍/' \
+      | awk -F, 'NR>1{print $1}' \
+      | grep "\S" && \
+      exit 0
+  fi
+done
+
