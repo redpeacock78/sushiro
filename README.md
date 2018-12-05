@@ -7,25 +7,25 @@
 
 ## 🍣How to Install🍣
 - ### Mac
-sushiroはHomebrewでのインストールができます。
-```console
-$ brew tap redpeacock78/sushiro
-$ brew install sushiro
-```
+    sushiroはHomebrewでのインストールができます。
+    ```console
+    $ brew tap redpeacock78/sushiro
+    $ brew install sushiro
+    ```
 - ### Linux
-Linuxでは以下のようにすることをお勧めします。
-```console
-$ git clone https://github.com/redpeacock78/sushiro
-$ cd "cloneしたディレクトリ"
-$ sudo install -m 0755 sushiro /usr/local/bin/sushiro
-```
-なおアップデート方法は、
-```console
-$ cd "cloneしたディレクトリ"
-$ git pull
-$ sudo install -m 0755 sushiro /usr/local/bin/sushiro
-```
-をお勧めします。
+    Linuxでは以下のようにすることをお勧めします。
+    ```console
+    $ git clone https://github.com/redpeacock78/sushiro
+    $ cd "cloneしたディレクトリ"
+    $ sudo install -m 0755 sushiro /usr/local/bin/sushiro
+    ```
+    なおアップデート方法は、
+    ```console
+    $ cd "cloneしたディレクトリ"
+    $ git pull
+    $ sudo install -m 0755 sushiro /usr/local/bin/sushiro
+    ```
+    をお勧めします。
 
 ## 🍣Overview of 'sushiro'🍣
 susiroには以下のオプションがあります。
