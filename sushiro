@@ -8,6 +8,7 @@
 #Randomly display the menu of Sushiro.
 #Grobals:
 #  LINES
+#  CACHE
 #Arguments:
 #  -h
 #  -l
@@ -22,7 +23,7 @@
 
 ###USAGE###
 [[ "${1}" = "-h" ]] && \
-	printf "sushiro version 0.0.4\n\nUSAGE: sushiro [OPTIONS] [ANYTHING]\nOptions:\n -l NUMBER\n    Randomly display the number of specified menus\n    (By default it display one item)\n -p MENU_NAME\n    Display price of menu corresponding to name\n -k MENU_NAME\n    Display the calorie of the name corresponding menu\n -a\n    Display names of all menus\n -f\n    Fetch menus from www.akindo-sushiro.co.jp\n" && \
+	printf "sushiro version 0.0.4\n\nUSAGE: sushiro [OPTIONS] [ANYTHING]\nOptions:\n -l [NUMBER]\n    Randomly display the number of specified menus\n    (By default it display one item)\n -p [MENU_NAME]\n    Display price of menu corresponding to name\n    (If not specified,all menus and prices will be displayed)\n -k [MENU_NAME]\n    Display the calorie of the name corresponding menu\n    (If not specified,all menus and calories are displayed)\n -a\n    Display names of all menus(158 species in total)\n -f\n    Fetch menus from www.akindo-sushiro.co.jp\n    (The menu will be saved in /usr/local/share/sushiro_cache)\n" && \
 exit 0
 
 
@@ -35,11 +36,10 @@ CACHE="/usr/local/share/sushiro_cache"
 [[ "${1}" = "-f" ]] && \
   curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "$CACHE" &&\
 exit 0
-
-###TEXT###
 [[ ! -f "$CACHE" ]] && \
   curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "$CACHE"
 
+###TEXT###
 while [[ "${#}" -gt 0 ]]; do
   ##RONDOM_MENUS##
   if  [[ "${1}" = "-l" ]]; then
