@@ -11,6 +11,9 @@
     ```console
     $ brew tap redpeacock78/sushiro
     $ brew install sushiro
+    
+    #もしくは常に最新のものが欲しい場合
+    $ brew install sushiro --HEAD
     ```
 - ### Linux
     Linuxでは以下のようにすることをお勧めします。
