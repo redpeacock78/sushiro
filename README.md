@@ -67,7 +67,7 @@ susiroには以下のオプションがあります。
 - ### -a
     全てのメニュー名を表示します。(全158種)
 - ### -f
-    www.akindo-sushiro.co.jp からメニューを取得します。(メニューは/usr/local/share/sushiro_cacheに保存されます,)
+    www.akindo-sushiro.co.jp からメニューを取得します。(デフォルトではメニューは/usr/local/share/sushiro_cacheに保存されます。)
 
 ## 🍣How to play🍣
 __基本的になんでもあり!!!!__
