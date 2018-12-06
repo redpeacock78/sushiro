@@ -32,7 +32,7 @@ LINES=1
 
 ###FETCH###
 #CACHE="/usr/local/share/sushiro_cache"
-CACHE=$(dirname "${0}" | sed 's#bin#share/sushiro_cache')
+CACHE=$(dirname "${0}" | sed 's#bin#share/sushiro_cache#')
 
 [[ "${1}" = "-f" ]] && \
   curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "$CACHE" &&\
