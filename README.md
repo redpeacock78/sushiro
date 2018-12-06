@@ -14,6 +14,8 @@
     
     #もしくは常に最新のものが欲しい場合
     $ brew install sushiro --HEAD
+    #HEADでinstallした場合のアップデート
+    $ brew reinstall sushiro
     ```
 - ### Linux
     Linuxでは以下のようにすることをお勧めします。
@@ -29,6 +31,7 @@
     $ sudo install -m 0755 sushiro /usr/local/bin/sushiro
     ```
     をお勧めします。
+    _＊linuxbrewでもインストール出来ます。_
 
 ## 🍣Overview of 'sushiro'🍣
 susiroには以下のオプションがあります。
