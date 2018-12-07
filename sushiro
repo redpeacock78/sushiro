@@ -80,7 +80,8 @@ while [[ "${#}" -gt 0 ]]; do
       | grep "${PRICES}" \
       | awk -F ',' '{print $1,$2}' \
       | sed 's/倍とろ$//' \
-      | grep "\S"
+      | grep "\S" && \
+      exit 0
   ##MENUS_CALORIES##
   elif [[ "${1}" = "-k" ]]; then
     shift && \
@@ -98,7 +99,8 @@ while [[ "${#}" -gt 0 ]]; do
       | grep "${CALORIES}" \
       | awk -F ',' '{print $1,$3}' \
       | sed 's/ 100円+税//' \
-      | grep "\S"
+      | grep "\S" && \
+      exit 0
   ##SHOW_ALL_MENUS##
   elif [[ "${1}" = "-a" ]]; then
     cat $CACHE \
@@ -119,6 +121,6 @@ while [[ "${#}" -gt 0 ]]; do
   fi
 done
 
-[[ -n  "${1}" ]] && \
+[[ -z "${1}" ]] && \
   printf "sushiro: missing operand\nTry 'sushiro -h' for more information.\n" && \
 exit 2
