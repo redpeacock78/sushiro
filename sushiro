@@ -95,7 +95,7 @@ while [[ "${#}" -gt 0 ]]; do
       | sort \
       | uniq \
       | sed 's/,倍/倍/' \
-      | gr!!ep "${CALORIES}" \
+      | grep "${CALORIES}" \
       | awk -F ',' '{print $1,$3}' \
       | sed 's/ 100円+税//' \
       | grep "\S"
@@ -119,6 +119,6 @@ while [[ "${#}" -gt 0 ]]; do
   fi
 done
 
-[[ -n  "${#}" ]] && \
+[[ -n  "${1}" ]] && \
   printf "sushiro: missing operand\nTry 'sushiro -h' for more information.\n" && \
 exit 2
