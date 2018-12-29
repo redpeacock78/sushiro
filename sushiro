@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 #
-# sushiro 0.0.5
+# sushiro 0.0.6
 # (C) 2018 redpeacock78
 # GPLv3 is applied to this script
 
 ######################################
 #Randomly display the menu of Sushiro.
 #Grobals:
-#  LINES
 #  CACHE
 #Arguments:
 #  -h
@@ -23,33 +22,30 @@
 
 ###USAGE###
 [[ "${1}" = "-h" ]] && \
-	printf "sushiro version 0.0.5\n\nUSAGE: sushiro [OPTIONS] [ANYTHING]\nOptions:\n -l [NUMBER]\n    Randomly display the number of specified menus\n    (By default it display one item)\n -p [MENU_NAME]\n    Display price of menu corresponding to name\n    (If not specified,all menus and prices will be displayed)\n -k [MENU_NAME]\n    Display the calorie of the name corresponding menu\n    (If not specified,all menus and calories are displayed)\n -a\n    Display names of all menus(158 species in total)\n -f\n    Fetch menus from www.akindo-sushiro.co.jp\n    (The menu will be saved in /usr/local/share/sushiro_cache)\n    *In case of linuxbrew it is 'directory where linuxbrew is installed/share/sushiro_cache'.*\n" && \
+	printf "sushiro version 0.0.6\n\nUSAGE: sushiro [OPTIONS] [ANYTHING]\nOptions:\n -l [NUMBER]\n    Randomly display the number of specified menus\n    (By default it display one item)\n -p [MENU_NAME]\n    Display price of menu corresponding to name\n    (If not specified,all menus and prices will be displayed)\n -k [MENU_NAME]\n    Display the calorie of the name corresponding menu\n    (If not specified,all menus and calories are displayed)\n -a\n    Display names of all menus(158 species in total)\n -f\n    Fetch menus from www.akindo-sushiro.co.jp\n    (The menu will be saved in /usr/local/share/sushiro_cache)\n    *In case of linuxbrew it is 'directory where linuxbrew is installed/share/sushiro_cache'.*\n" && \
 exit 0
 
 
 ###DEFAULT_PARAMETER###
-LINES=1
+#LINES=1
 
 ###FETCH###
 #CACHE="/usr/local/share/sushiro_cache"
 CACHE=$(dirname "${0}" | sed 's#bin#share/sushiro_cache#')
 
-[[ "${1}" = "-f" ]] && \
-  curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "$CACHE" &&\
-exit 0
-[[ ! -f "$CACHE" ]] && \
-  curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "$CACHE"
+#[[ "${1}" = "-f" ]] && \
+#  curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "$CACHE" &&\
+#exit 0
+[[ ! -f "${CACHE}" ]] && \
+  curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "${CACHE}"
 
 ###TEXT###
 while [[ "${#}" -gt 0 ]]; do
   ##RONDOM_MENUS##
   if  [[ "${1}" = "-l" ]]; then
     shift && \
-    lines="$(tr -dc '0-9' <<< $1)"
-    if [[ "${lines}" -eq 0 ]]; then
-      lines="${LINES}"
-    fi
-    cat $CACHE \
+    LINES="${1:-1}"
+    cat "${CACHE}" \
       | grep -e '="ttl"' -e price \
       | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
       | tr '\n' ' ' \
@@ -61,14 +57,14 @@ while [[ "${#}" -gt 0 ]]; do
       | awk -F ',' '{print $1}' \
       | sort -R \
       | grep "\S" \
-      | shuf -n "${lines}" && \
+      | shuf -n "${LINES}" && \
       exit 0
   ##MENUS_PRICES##
   elif [[ "${1}" = "-p" ]]; then
     shift && \
-    PRICES="$1"
+    PRICES="${1}"
     shift
-    cat $CACHE \
+    cat "${CACHE}" \
       | grep -e '="ttl"' -e price \
       | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
       | tr '\n' ' ' \
@@ -85,9 +81,9 @@ while [[ "${#}" -gt 0 ]]; do
   ##MENUS_CALORIES##
   elif [[ "${1}" = "-k" ]]; then
     shift && \
-    CALORIES="$1"
+    CALORIES="${1}"
     shift
-    cat $CACHE \
+    cat "${CACHE}" \
       | grep -e '="ttl"' -e price \
       | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
       | tr '\n' ' ' \
@@ -103,7 +99,7 @@ while [[ "${#}" -gt 0 ]]; do
       exit 0
   ##SHOW_ALL_MENUS##
   elif [[ "${1}" = "-a" ]]; then
-    cat $CACHE \
+    cat "${CACHE}" \
       | grep -e '="ttl"' -e price \
       | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
       | tr '\n' ' ' \
@@ -115,6 +111,10 @@ while [[ "${#}" -gt 0 ]]; do
       | awk -F, 'NR>1{print $1}' \
       | grep "\S" && \
       exit 0
+  ##FETCH##
+  elif [[ "${1}" = "-f" ]]; then
+    curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "${CACHE}" && \
+    exit 0
   else
      printf "sushiro: missing operand\nTry 'sushiro -h' for more information.\n" && \
      exit 2
