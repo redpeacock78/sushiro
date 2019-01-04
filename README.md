@@ -1,5 +1,5 @@
 # README
-[![GPLv3](https://img.shields.io/badge/license-GPLv3-red.svg)](license) 
+[![GPLv3](https://img.shields.io/github/license/redpeacock78/sushiro.svg)](https://github.com/redpeacock78/sushiro/blob/master/LICENSE) 
 [![Languages](https://img.shields.io/badge/Languages-Shell-brightgreen.svg)](Languages)
 [![forks](https://img.shields.io/github/forks/redpeacock78/sushiro.svg)](forks)
 [![tweet](https://img.shields.io/twitter/url/https/github.com/redpeacock78/sushiro.svg?style=social)](tweet)
