@@ -1,5 +1,7 @@
 # README
-[![GPLv3](https://img.shields.io/badge/license-GPLv3-red.svg)](license) [![Languages](https://img.shields.io/badge/Languages-Shell-brightgreen.svg)](Languages)
+[![GPLv3](https://img.shields.io/badge/license-GPLv3-red.svg)](license) 
+[![Languages](https://img.shields.io/badge/Languages-Shell-brightgreen.svg)](Languages)
+[![tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](tweet)
 ## 🍣What is 'sushiro'?🍣
 このコマンド'sushiro'(以下sushiro)は回転寿司チェーン店"スシロー"のメニューをランダムに表示するコマンドです。
 
