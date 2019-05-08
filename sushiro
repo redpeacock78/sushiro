@@ -114,17 +114,21 @@ while [[ "${#}" -gt 0 ]]; do
   ##FETCH##
   elif [[ "${1}" = "-f" ]]; then
     if [[ -e "${CACHE}" ]]; then
-      printf "Are you sure you want to overwrite the cache? [Y/n] "
+      printf "Are you sure you want to overwrite the menu? [Y/n] "
       read ANSWER
       case "${ANSWER}" in
 	"" | "Y" | "y" | "yes" | "Yes" | "YES" ) 
           curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "${CACHE}" && \
-	  #printf 'DONE!!' && \
+	  printf "DONE!!\n" && \
           exit 0;;
 	* )
 	  printf "The cache was not overwritten.\n" && \
 	  exit 2;;
       esac
+    else
+      curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "${CACHE}" && \
+      printf "SUCCESS!!\n" && \
+      exit 0
     fi
   else
      printf "sushiro: missing operand\nTry 'sushiro -h' for more information.\n" && \
