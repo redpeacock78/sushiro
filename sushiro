@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# sushiro 0.0.6
+# sushiro 0.0.7
 # (C) 2018 redpeacock78
 # GPLv3 is applied to this script
 
@@ -114,8 +114,7 @@ while [[ "${#}" -gt 0 ]]; do
   ##FETCH##
   elif [[ "${1}" = "-f" ]]; then
     if [[ -e "${CACHE}" ]]; then
-      printf "Are you sure you want to overwrite the menu? [Y/n] "
-      read ANSWER
+      read -p "Are you sure you want to overwrite the menu? [Y/n] " ANSWER
       case "${ANSWER}" in
 	"" | "Y" | "y" | "yes" | "Yes" | "YES" ) 
           curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "${CACHE}" && \
