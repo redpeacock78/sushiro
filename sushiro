@@ -46,6 +46,7 @@ while [[ "${#}" -gt 0 ]]; do
     shift && \
     LINES="${1:-1}"
     cat "${CACHE}" \
+      | tr -d '\r' \
       | grep -e '="ttl"' -e price \
       | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
       | tr '\n' ' ' \
@@ -65,6 +66,7 @@ while [[ "${#}" -gt 0 ]]; do
     PRICES="${1}"
     shift
     cat "${CACHE}" \
+      | tr -d '\r' \
       | grep -e '="ttl"' -e price \
       | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
       | tr '\n' ' ' \
@@ -84,6 +86,7 @@ while [[ "${#}" -gt 0 ]]; do
     CALORIES="${1}"
     shift
     cat "${CACHE}" \
+      | tr -d '\r' \
       | grep -e '="ttl"' -e price \
       | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
       | tr '\n' ' ' \
@@ -100,6 +103,7 @@ while [[ "${#}" -gt 0 ]]; do
   ##SHOW_ALL_MENUS##
   elif [[ "${1}" = "-a" ]]; then
     cat "${CACHE}" \
+      | tr -d '\r' \
       | grep -e '="ttl"' -e price \
       | sed 's/<[^>]*>//g;s/ + /+/g;s/場合 /場合/g;/^$/d' \
       | tr '\n' ' ' \
