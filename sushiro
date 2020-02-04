@@ -31,7 +31,7 @@ exit 0
 
 ###FETCH###
 #CACHE="/usr/local/share/sushiro_cache"
-CACHE=$(cd "$(dirname "${0}")";pwd | sed 's#bin#share/sushiro_cache#')
+CACHE=$(dirname $(readlink -f "${0}") | sed 's#bin#share/sushiro_cache#')
 
 #[[ "${1}" = "-f" ]] && \
 #  curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "$CACHE" &&\
@@ -54,7 +54,8 @@ while [[ "${#}" -gt 0 ]]; do
       | awk '{gsub(/kcal,/,"kcal\n");print}' \
       | sort \
       | uniq \
-      | sed '//d' \
+      | sed '/
+/d' \
       | awk -F ',' '{print $1}' \
       | sort -R \
       | grep "\S" \
@@ -74,7 +75,8 @@ while [[ "${#}" -gt 0 ]]; do
       | awk '{gsub(/kcal,/,"kcal\n");print}' \
       | sort \
       | uniq \
-      | sed '//d' \
+      | sed '/
+/d' \
       | grep "${PRICES}" \
       | awk -F ',' '{print $1,$2}' \
       | sed 's/倍とろ$//' \
@@ -94,7 +96,8 @@ while [[ "${#}" -gt 0 ]]; do
       | awk '{gsub(/kcal,/,"kcal\n");print}' \
       | sort \
       | uniq \
-      | sed '//d' \
+      | sed '/
+/d' \
       | grep "${CALORIES}" \
       | awk -F ',' '{print $1,$3}' \
       | sed 's/ 100円+税//' \
@@ -111,7 +114,8 @@ while [[ "${#}" -gt 0 ]]; do
       | awk '{gsub(/kcal,/,"kcal\n");print}' \
       | sort \
       | uniq \
-      | sed '//d' \
+      | sed '/
+/d' \
       | awk -F, 'NR>1{print $1}' \
       | grep "\S" && \
       exit 0
