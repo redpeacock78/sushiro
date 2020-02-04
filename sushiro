@@ -31,7 +31,7 @@ exit 0
 
 ###FETCH###
 #CACHE="/usr/local/share/sushiro_cache"
-CACHE=$(dirname $(type "${0}" | awk '{print $3}') | sed 's#bin#share/sushiro_cache#')
+CACHE=$(echo "$(cd "$(dirname "${0}")" && echo "$(pwd)/$(basename "${0}")")" | sed 's#bin#share/sushiro_cache#')
 
 #[[ "${1}" = "-f" ]] && \
 #  curl -s 'https://www.akindo-sushiro.co.jp/menu/' -o "$CACHE" &&\
